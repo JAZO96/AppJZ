@@ -1,0 +1,187 @@
+﻿@{
+    ViewData["Title"] = "Inicio";
+}
+
+<div class="container mt-4">
+    <!-- Hero Section -->
+    <div class="jumbotron bg-primary text-white rounded-3 p-5 mb-4 shadow">
+        <h1 class="display-4 fw-bold">
+            <i class="bi bi-mortarboard-fill me-3"></i>Sistema de Gestión Académica
+        </h1>
+        <p class="lead">Panel de Administración - Gestión Integral Educativa</p>
+        <hr class="my-4 bg-white">
+        <p>Administra estudiantes, docentes, cursos, calificaciones y todos los procesos académicos de tu institución.</p>
+    </div>
+
+    <!-- Cards de Módulos Académicos -->
+    <div class="row g-4">
+        <!-- Card Estudiantes -->
+        <div class="col-md-4">
+            <div class="card shadow-sm h-100 border-0 hover-card">
+                <div class="card-body text-center p-4">
+                    <div class="mb-3">
+                        <i class="bi bi-person-video3 text-primary" style="font-size: 3rem;"></i>
+                    </div>
+                    <h5 class="card-title fw-bold">Estudiantes</h5>
+                    <p class="card-text text-muted">
+                        Gestiona la información de los estudiantes matriculados
+                    </p>
+                    <a asp-controller="Estudiantes" asp-action="Index" class="btn btn-primary mt-2">
+                        <i class="bi bi-arrow-right-circle me-1"></i> Acceder
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card Docentes -->
+        <div class="col-md-4">
+            <div class="card shadow-sm h-100 border-0 hover-card">
+                <div class="card-body text-center p-4">
+                    <div class="mb-3">
+                        <i class="bi bi-person-workspace text-success" style="font-size: 3rem;"></i>
+                    </div>
+                    <h5 class="card-title fw-bold">Docentes</h5>
+                    <p class="card-text text-muted">
+                        Administra el cuerpo docente y asignaciones
+                    </p>
+                    <a asp-controller="Docentes" asp-action="Index" class="btn btn-success mt-2">
+                        <i class="bi bi-arrow-right-circle me-1"></i> Acceder
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card Cursos -->
+        <div class="col-md-4">
+            <div class="card shadow-sm h-100 border-0 hover-card">
+                <div class="card-body text-center p-4">
+                    <div class="mb-3">
+                        <i class="bi bi-book-fill text-info" style="font-size: 3rem;"></i>
+                    </div>
+                    <h5 class="card-title fw-bold">Cursos</h5>
+                    <p class="card-text text-muted">
+                        Gestiona los cursos y materias disponibles
+                    </p>
+                    <a asp-controller="Gradoes" asp-action="Index" class="btn btn-info text-white mt-2">
+                        <i class="bi bi-arrow-right-circle me-1"></i> Acceder
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Segunda fila de módulos -->
+    <div class="row g-4 mt-2">
+        <!-- Card Calificaciones -->
+        <div class="col-md-4">
+            <div class="card shadow-sm h-100 border-0 hover-card">
+                <div class="card-body text-center p-4">
+                    <div class="mb-3">
+                        <i class="bi bi-clipboard-data-fill text-warning" style="font-size: 3rem;"></i>
+                    </div>
+                    <h5 class="card-title fw-bold">Calificaciones</h5>
+                    <p class="card-text text-muted">
+                        Registra y consulta las calificaciones académicas
+                    </p>
+                    <a asp-controller="Calificaciones" asp-action="Index" class="btn btn-warning mt-2">
+                        <i class="bi bi-arrow-right-circle me-1"></i> Acceder
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card Horarios -->
+        <div class="col-md-4">
+            <div class="card shadow-sm h-100 border-0 hover-card">
+                <div class="card-body text-center p-4">
+                    <div class="mb-3">
+                        <i class="bi bi-calendar3 text-danger" style="font-size: 3rem;"></i>
+                    </div>
+                    <h5 class="card-title fw-bold">Horarios</h5>
+                    <p class="card-text text-muted">
+                        Administra los horarios de clases y eventos
+                    </p>
+                    <a asp-controller="Horarios" asp-action="Index" class="btn btn-danger mt-2">
+                        <i class="bi bi-arrow-right-circle me-1"></i> Acceder
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card Roles -->
+        <div class="col-md-4">
+            <div class="card shadow-sm h-100 border-0 hover-card">
+                <div class="card-body text-center p-4">
+                    <div class="mb-3">
+                        <i class="bi bi-people-fill text-secondary" style="font-size: 3rem;"></i>
+                    </div>
+                    <h5 class="card-title fw-bold">Roles y Permisos</h5>
+                    <p class="card-text text-muted">
+                        Gestiona roles y permisos del sistema
+                    </p>
+                    <a asp-controller="Rols" asp-action="Index" class="btn btn-secondary mt-2">
+                        <i class="bi bi-arrow-right-circle me-1"></i> Acceder
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sección de Estadísticas Académicas -->
+    <div class="row g-4 mt-4">
+        <div class="col-md-12">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <i class="bi bi-graph-up me-2"></i> Estadísticas Institucionales
+                </div>
+                <div class="card-body">
+                    <div class="row text-center">
+                        <div class="col-md-3">
+                            <div class="p-3">
+                                <i class="bi bi-person-video3 text-primary" style="font-size: 2rem;"></i>
+                                <h3 class="fw-bold mt-2">0</h3>
+                                <p class="text-muted">Estudiantes Activos</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="p-3">
+                                <i class="bi bi-person-workspace text-success" style="font-size: 2rem;"></i>
+                                <h3 class="fw-bold mt-2">0</h3>
+                                <p class="text-muted">Docentes</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="p-3">
+                                <i class="bi bi-book text-info" style="font-size: 2rem;"></i>
+                                <h3 class="fw-bold mt-2">0</h3>
+                                <p class="text-muted">Cursos Activos</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="p-3">
+                                <i class="bi bi-calendar-check text-warning" style="font-size: 2rem;"></i>
+                                <h3 class="fw-bold mt-2">2024-2025</h3>
+                                <p class="text-muted">Período Académico</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .hover-card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .hover-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 16px rgba(0,0,0,0.2) !important;
+    }
+
+    .jumbotron {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+</style>
