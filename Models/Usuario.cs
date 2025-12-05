@@ -13,7 +13,7 @@ namespace AppJZ.Models
         public string Email { get; set; }
 
         public int TipoDocumentoId { get; set; }
-        public int RolId { get; set; }
+        public int   RolId { get; set; }
         public string NumeroDocumento { get; set; }
         public string Imagen { get; set; }
         public bool Estado { get; set; }

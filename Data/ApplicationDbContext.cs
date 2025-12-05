@@ -11,7 +11,7 @@ namespace AppJZ.Data
         {
         }
 
-        // DbSets de todas tus entidades en /Models
+        // DbSets de tus modelos existentes
         public DbSet<Rol> Rols { get; set; }
         public DbSet<Actividadevaluacion> Actividadevaluacions { get; set; }
         public DbSet<Administracionescolar> Administracionescolars { get; set; }
@@ -37,69 +37,53 @@ namespace AppJZ.Data
         {
             base.OnModelCreating(modelBuilder);
 
+            // Charset y collation global
             modelBuilder
                 .UseCollation("utf8mb4_general_ci")
                 .HasCharSet("utf8mb4");
 
-            // Configurar ApplicationUser para que use la tabla usuario existente
+            // ⬇️ CONFIGURACIÓN DE TABLA ASPNETUSERS (Identity)
             modelBuilder.Entity<ApplicationUser>(entity =>
             {
-                entity.ToTable("usuario");
+                entity.ToTable("AspNetUsers");
 
-                entity.HasKey(e => e.Id).HasName("PRIMARY");
+                // Campos personalizados
+                entity.Property(e => e.Nombre).HasColumnName("nombre");
+                entity.Property(e => e.Apellido).HasColumnName("apellido");
+                entity.Property(e => e.NumeroDocumento).HasColumnName("numero_documento");
+                entity.Property(e => e.RolId).HasColumnName("rol_id");
+                entity.Property(e => e.TipoDocumentoId).HasColumnName("tipo_documento_id");
+                entity.Property(e => e.Imagen).HasColumnName("imagen");
+                entity.Property(e => e.Estado).HasColumnName("estado");
+                entity.Property(e => e.FechaRegistro).HasColumnName("fecha_registro");
 
-                entity.Ignore(e => e.PhoneNumber);
-                entity.Ignore(e => e.PhoneNumberConfirmed);
-                entity.Ignore(e => e.TwoFactorEnabled);
-
-            // Índices
-            entity.HasIndex(e => e.NumeroDocumento, "numero_documento").IsUnique();
-                entity.HasIndex(e => e.RolId, "rol_id");
-                entity.HasIndex(e => e.TipoDocumentoId, "tipo_documento_id");
-
-                // Relación con Rol
-                entity.HasOne(u => u.Rol)
-                    .WithMany()
-                    .HasForeignKey(u => u.RolId)
-                    .OnDelete(DeleteBehavior.Restrict)
-                    .HasConstraintName("usuario_ibfk_2");
-
-                // Relación con TipoDocumento
-                entity.HasOne(u => u.TipoDocumento)
-                    .WithMany()
-                    .HasForeignKey(u => u.TipoDocumentoId)
-                    .OnDelete(DeleteBehavior.Restrict)
-                    .HasConstraintName("usuario_ibfk_1");
+                // índice único
+                entity.HasIndex(e => e.NumeroDocumento).IsUnique();
             });
 
-            // Configurar Administracionescolar con múltiples relaciones
+            // CONFIGURACIÓN Administracionescolar
             modelBuilder.Entity<Administracionescolar>(entity =>
             {
                 entity.ToTable("administracionescolar");
-
                 entity.HasKey(e => e.Id).HasName("PRIMARY");
 
-                // Estudiante
                 entity.HasOne(a => a.Estudiante)
                     .WithMany(u => u.AdministracionescolarEstudiantes)
                     .HasForeignKey(a => a.EstudianteId)
                     .OnDelete(DeleteBehavior.Restrict);
 
-                // Docente
                 entity.HasOne(a => a.Docente)
                     .WithMany(u => u.AdministracionescolarDocentes)
                     .HasForeignKey(a => a.DocenteId)
                     .OnDelete(DeleteBehavior.Restrict);
 
-                // Grado
                 entity.HasOne(a => a.Grado)
                     .WithMany(g => g.Administracionescolars)
                     .HasForeignKey(a => a.GradoId)
                     .OnDelete(DeleteBehavior.Restrict);
             });
 
-
-            // Configurar otras entidades
+            // RESTO DE ENTIDADES
             ConfigurarEntidades(modelBuilder);
         }
 
@@ -137,8 +121,6 @@ namespace AppJZ.Data
                     .WithMany()
                     .HasForeignKey(d => d.DocenteId);
             });
-
-            // Agregar configuraciones para las demás entidades...
         }
     }
 }

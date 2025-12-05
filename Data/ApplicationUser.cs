@@ -4,7 +4,6 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AppJZ.Data
 {
-    [Table("usuario")]
     public class ApplicationUser : IdentityUser
     {
         [Column("nombre")]
@@ -34,17 +33,14 @@ namespace AppJZ.Data
         [Column("fecha_registro")]
         public DateTime FechaRegistro { get; set; } = DateTime.Now;
 
-        // Relaciones con modelos
+        // Relaciones
         [ForeignKey("RolId")]
         public virtual AppJZ.Models.Rol? Rol { get; set; }
 
         [ForeignKey("TipoDocumentoId")]
         public virtual AppJZ.Models.Tipodocumento? TipoDocumento { get; set; }
 
-        // -----------------------------
-        // RELACIONES DE NAVEGACIÓN
-        // -----------------------------
-
+        // Navegaciones
         [InverseProperty("Usuario")]
         public virtual ICollection<AppJZ.Models.Actividadevaluacion> Actividadevaluacions { get; set; }
             = new List<AppJZ.Models.Actividadevaluacion>();
@@ -65,12 +61,10 @@ namespace AppJZ.Data
         public virtual ICollection<AppJZ.Models.Observadoralumno> ObservadoralumnoUsuarios { get; set; }
             = new List<AppJZ.Models.Observadoralumno>();
 
-        // 👉 RELACIÓN COMO ESTUDIANTE
         [InverseProperty("Estudiante")]
         public virtual ICollection<AppJZ.Models.Administracionescolar> AdministracionescolarEstudiantes { get; set; }
             = new List<AppJZ.Models.Administracionescolar>();
 
-        // 👉 RELACIÓN COMO DOCENTE
         [InverseProperty("Docente")]
         public virtual ICollection<AppJZ.Models.Administracionescolar> AdministracionescolarDocentes { get; set; }
             = new List<AppJZ.Models.Administracionescolar>();
