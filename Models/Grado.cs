@@ -18,7 +18,7 @@ public class Grado
     public string? Estado { get; set; }
 
     public int? DocenteId { get; set; }
-    public Docente? Docente { get; set; }
+    public virtual Docente? Docente { get; set; }
 
     public virtual ICollection<Administracionescolar> Administracionescolars { get; set; } = new List<Administracionescolar>();
 

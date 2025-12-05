@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AppJZ.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20251205191926_InitialClean")]
-    partial class InitialClean
+    [Migration("20251205202856_AddIdentityTablesSimplified")]
+    partial class AddIdentityTablesSimplified
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -129,11 +129,7 @@ namespace AppJZ.Migrations
                     b.HasIndex("NumeroDocumento")
                         .IsUnique();
 
-                    b.HasIndex("RolId");
-
-                    b.HasIndex("TipoDocumentoId");
-
-                    b.ToTable("AspNetUsers", (string)null);
+                    b.ToTable("aspnetusers", (string)null);
                 });
 
             modelBuilder.Entity("AppJZ.Models.Actividadevaluacion", b =>
@@ -154,17 +150,14 @@ namespace AppJZ.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("UsuarioId")
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("longtext");
 
                     b.Property<int?>("UsuarioId1")
                         .HasColumnType("int");
 
-                    b.HasKey("Id")
-                        .HasName("PRIMARY");
+                    b.HasKey("Id");
 
                     b.HasIndex("TipoActividadId");
-
-                    b.HasIndex("UsuarioId");
 
                     b.HasIndex("UsuarioId1");
 
@@ -180,10 +173,10 @@ namespace AppJZ.Migrations
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("DocenteId")
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("longtext");
 
                     b.Property<string>("EstudianteId")
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("longtext");
 
                     b.Property<int?>("GradoId")
                         .HasColumnType("int");
@@ -191,12 +184,7 @@ namespace AppJZ.Migrations
                     b.Property<int?>("UsuarioId")
                         .HasColumnType("int");
 
-                    b.HasKey("Id")
-                        .HasName("PRIMARY");
-
-                    b.HasIndex("DocenteId");
-
-                    b.HasIndex("EstudianteId");
+                    b.HasKey("Id");
 
                     b.HasIndex("GradoId");
 
@@ -289,7 +277,7 @@ namespace AppJZ.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Docentes");
+                    b.ToTable("docente", (string)null);
                 });
 
             modelBuilder.Entity("AppJZ.Models.Documentacion", b =>
@@ -310,7 +298,7 @@ namespace AppJZ.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("UsuarioId")
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("longtext");
 
                     b.Property<int?>("UsuarioId1")
                         .HasColumnType("int");
@@ -319,11 +307,9 @@ namespace AppJZ.Migrations
 
                     b.HasIndex("TipoDocumentoId");
 
-                    b.HasIndex("UsuarioId");
-
                     b.HasIndex("UsuarioId1");
 
-                    b.ToTable("Documentacions");
+                    b.ToTable("documentacion", (string)null);
                 });
 
             modelBuilder.Entity("AppJZ.Models.Formulario", b =>
@@ -375,18 +361,16 @@ namespace AppJZ.Migrations
                         .HasColumnType("longtext");
 
                     b.Property<string>("UsuarioId")
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("longtext");
 
                     b.Property<int?>("UsuarioId1")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UsuarioId");
-
                     b.HasIndex("UsuarioId1");
 
-                    b.ToTable("Gestionacademicas");
+                    b.ToTable("gestionacademica", (string)null);
                 });
 
             modelBuilder.Entity("AppJZ.Models.Grado", b =>
@@ -416,8 +400,7 @@ namespace AppJZ.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.HasKey("Id")
-                        .HasName("PRIMARY");
+                    b.HasKey("Id");
 
                     b.HasIndex("DocenteId");
 
@@ -482,18 +465,16 @@ namespace AppJZ.Migrations
                         .HasColumnType("tinyint(1)");
 
                     b.Property<string>("UsuarioId")
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("longtext");
 
                     b.Property<int?>("UsuarioId1")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UsuarioId");
-
                     b.HasIndex("UsuarioId1");
 
-                    b.ToTable("Matriculafinanzas");
+                    b.ToTable("matriculafinanzas", (string)null);
                 });
 
             modelBuilder.Entity("AppJZ.Models.Observadoralumno", b =>
@@ -517,15 +498,13 @@ namespace AppJZ.Migrations
                         .HasColumnType("longtext");
 
                     b.Property<string>("UsuarioId")
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("longtext");
 
                     b.HasKey("Id");
 
                     b.HasIndex("DocenteNavigationId");
 
-                    b.HasIndex("UsuarioId");
-
-                    b.ToTable("Observadoralumnos");
+                    b.ToTable("observadoralumno", (string)null);
                 });
 
             modelBuilder.Entity("AppJZ.Models.Parentesco", b =>
@@ -573,8 +552,7 @@ namespace AppJZ.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.HasKey("Id")
-                        .HasName("PRIMARY");
+                    b.HasKey("Id");
 
                     b.ToTable("rol", (string)null);
                 });
@@ -610,7 +588,7 @@ namespace AppJZ.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Tipodocumentos");
+                    b.ToTable("tipodocumento", (string)null);
                 });
 
             modelBuilder.Entity("AppJZ.Models.Tipodocumentoacademico", b =>
@@ -836,64 +814,28 @@ namespace AppJZ.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("AppJZ.Data.ApplicationUser", b =>
-                {
-                    b.HasOne("AppJZ.Models.Rol", "Rol")
-                        .WithMany()
-                        .HasForeignKey("RolId");
-
-                    b.HasOne("AppJZ.Models.Tipodocumento", "TipoDocumento")
-                        .WithMany()
-                        .HasForeignKey("TipoDocumentoId");
-
-                    b.Navigation("Rol");
-
-                    b.Navigation("TipoDocumento");
-                });
-
             modelBuilder.Entity("AppJZ.Models.Actividadevaluacion", b =>
                 {
                     b.HasOne("AppJZ.Models.Tipoactividad", "TipoActividad")
                         .WithMany("Actividadevaluacions")
                         .HasForeignKey("TipoActividadId");
 
-                    b.HasOne("AppJZ.Data.ApplicationUser", "Usuario")
-                        .WithMany("Actividadevaluacions")
-                        .HasForeignKey("UsuarioId");
-
                     b.HasOne("AppJZ.Models.Usuario", null)
                         .WithMany("Actividadevaluacions")
                         .HasForeignKey("UsuarioId1");
 
                     b.Navigation("TipoActividad");
-
-                    b.Navigation("Usuario");
                 });
 
             modelBuilder.Entity("AppJZ.Models.Administracionescolar", b =>
                 {
-                    b.HasOne("AppJZ.Data.ApplicationUser", "Docente")
-                        .WithMany("AdministracionescolarDocentes")
-                        .HasForeignKey("DocenteId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("AppJZ.Data.ApplicationUser", "Estudiante")
-                        .WithMany("AdministracionescolarEstudiantes")
-                        .HasForeignKey("EstudianteId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
                     b.HasOne("AppJZ.Models.Grado", "Grado")
                         .WithMany("Administracionescolars")
-                        .HasForeignKey("GradoId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("GradoId");
 
                     b.HasOne("AppJZ.Models.Usuario", null)
                         .WithMany("Administracionescolar")
                         .HasForeignKey("UsuarioId");
-
-                    b.Navigation("Docente");
-
-                    b.Navigation("Estudiante");
 
                     b.Navigation("Grado");
                 });
@@ -936,17 +878,11 @@ namespace AppJZ.Migrations
                         .WithMany("Documentacions")
                         .HasForeignKey("TipoDocumentoId");
 
-                    b.HasOne("AppJZ.Data.ApplicationUser", "Usuario")
-                        .WithMany("Documentacions")
-                        .HasForeignKey("UsuarioId");
-
                     b.HasOne("AppJZ.Models.Usuario", null)
                         .WithMany("Documentacions")
                         .HasForeignKey("UsuarioId1");
 
                     b.Navigation("TipoDocumento");
-
-                    b.Navigation("Usuario");
                 });
 
             modelBuilder.Entity("AppJZ.Models.Formulario", b =>
@@ -970,15 +906,9 @@ namespace AppJZ.Migrations
 
             modelBuilder.Entity("AppJZ.Models.Gestionacademica", b =>
                 {
-                    b.HasOne("AppJZ.Data.ApplicationUser", "Usuario")
-                        .WithMany("Gestionacademicas")
-                        .HasForeignKey("UsuarioId");
-
                     b.HasOne("AppJZ.Models.Usuario", null)
                         .WithMany("Gestionacademicas")
                         .HasForeignKey("UsuarioId1");
-
-                    b.Navigation("Usuario");
                 });
 
             modelBuilder.Entity("AppJZ.Models.Grado", b =>
@@ -1011,15 +941,9 @@ namespace AppJZ.Migrations
 
             modelBuilder.Entity("AppJZ.Models.Matriculafinanza", b =>
                 {
-                    b.HasOne("AppJZ.Data.ApplicationUser", "Usuario")
-                        .WithMany("Matriculafinanzas")
-                        .HasForeignKey("UsuarioId");
-
                     b.HasOne("AppJZ.Models.Usuario", null)
                         .WithMany("Matriculafinanzas")
                         .HasForeignKey("UsuarioId1");
-
-                    b.Navigation("Usuario");
                 });
 
             modelBuilder.Entity("AppJZ.Models.Observadoralumno", b =>
@@ -1028,13 +952,7 @@ namespace AppJZ.Migrations
                         .WithMany("ObservadoralumnoUsuarios")
                         .HasForeignKey("DocenteNavigationId");
 
-                    b.HasOne("AppJZ.Data.ApplicationUser", "Usuario")
-                        .WithMany("ObservadoralumnoUsuarios")
-                        .HasForeignKey("UsuarioId");
-
                     b.Navigation("DocenteNavigation");
-
-                    b.Navigation("Usuario");
                 });
 
             modelBuilder.Entity("AppJZ.Models.Usuario", b =>
@@ -1105,23 +1023,6 @@ namespace AppJZ.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("AppJZ.Data.ApplicationUser", b =>
-                {
-                    b.Navigation("Actividadevaluacions");
-
-                    b.Navigation("AdministracionescolarDocentes");
-
-                    b.Navigation("AdministracionescolarEstudiantes");
-
-                    b.Navigation("Documentacions");
-
-                    b.Navigation("Gestionacademicas");
-
-                    b.Navigation("Matriculafinanzas");
-
-                    b.Navigation("ObservadoralumnoUsuarios");
                 });
 
             modelBuilder.Entity("AppJZ.Models.Grado", b =>

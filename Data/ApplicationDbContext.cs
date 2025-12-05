@@ -10,8 +10,6 @@ namespace AppJZ.Data
             : base(options)
         {
         }
-
-        // DbSets de tus modelos existentes
         public DbSet<Rol> Rols { get; set; }
         public DbSet<Actividadevaluacion> Actividadevaluacions { get; set; }
         public DbSet<Administracionescolar> Administracionescolars { get; set; }
@@ -37,90 +35,81 @@ namespace AppJZ.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            // Charset y collation global
             modelBuilder
                 .UseCollation("utf8mb4_general_ci")
                 .HasCharSet("utf8mb4");
 
-            // ⬇️ CONFIGURACIÓN DE TABLA ASPNETUSERS (Identity)
+            // Configurar ApplicationUser SIN crear FK en la migración
             modelBuilder.Entity<ApplicationUser>(entity =>
             {
-                entity.ToTable("AspNetUsers");
+                entity.ToTable("aspnetusers");
 
-                // Campos personalizados
-                entity.Property(e => e.Nombre).HasColumnName("nombre");
-                entity.Property(e => e.Apellido).HasColumnName("apellido");
-                entity.Property(e => e.NumeroDocumento).HasColumnName("numero_documento");
-                entity.Property(e => e.RolId).HasColumnName("rol_id");
-                entity.Property(e => e.TipoDocumentoId).HasColumnName("tipo_documento_id");
-                entity.Property(e => e.Imagen).HasColumnName("imagen");
-                entity.Property(e => e.Estado).HasColumnName("estado");
-                entity.Property(e => e.FechaRegistro).HasColumnName("fecha_registro");
+                // ⚠️ IGNORAR las relaciones de navegación temporalmente
+                entity.Ignore(u => u.Rol);
+                entity.Ignore(u => u.TipoDocumento);
 
-                // índice único
+                // Ignorar colecciones de navegación
+                entity.Ignore(u => u.Actividadevaluacions);
+                entity.Ignore(u => u.Documentacions);
+                entity.Ignore(u => u.Matriculafinanzas);
+                entity.Ignore(u => u.Gestionacademicas);
+                entity.Ignore(u => u.ObservadoralumnoUsuarios);
+                entity.Ignore(u => u.AdministracionescolarEstudiantes);
+                entity.Ignore(u => u.AdministracionescolarDocentes);
+
                 entity.HasIndex(e => e.NumeroDocumento).IsUnique();
             });
 
-            // CONFIGURACIÓN Administracionescolar
+            // Configurar otras entidades también ignorando las relaciones con ApplicationUser
             modelBuilder.Entity<Administracionescolar>(entity =>
             {
                 entity.ToTable("administracionescolar");
-                entity.HasKey(e => e.Id).HasName("PRIMARY");
+                entity.HasKey(e => e.Id);
 
-                entity.HasOne(a => a.Estudiante)
-                    .WithMany(u => u.AdministracionescolarEstudiantes)
-                    .HasForeignKey(a => a.EstudianteId)
-                    .OnDelete(DeleteBehavior.Restrict);
-
-                entity.HasOne(a => a.Docente)
-                    .WithMany(u => u.AdministracionescolarDocentes)
-                    .HasForeignKey(a => a.DocenteId)
-                    .OnDelete(DeleteBehavior.Restrict);
+                entity.Ignore(a => a.Estudiante);
+                entity.Ignore(a => a.Docente);
 
                 entity.HasOne(a => a.Grado)
                     .WithMany(g => g.Administracionescolars)
                     .HasForeignKey(a => a.GradoId)
-                    .OnDelete(DeleteBehavior.Restrict);
+                    .IsRequired(false);
             });
 
-            // RESTO DE ENTIDADES
-            ConfigurarEntidades(modelBuilder);
-        }
-
-        private void ConfigurarEntidades(ModelBuilder modelBuilder)
-        {
-            // Rol
-            modelBuilder.Entity<Rol>(entity =>
-            {
-                entity.HasKey(e => e.Id).HasName("PRIMARY");
-                entity.ToTable("rol");
-            });
-
-            // Actividadevaluacion
             modelBuilder.Entity<Actividadevaluacion>(entity =>
             {
-                entity.HasKey(e => e.Id).HasName("PRIMARY");
                 entity.ToTable("actividadevaluacion");
-
-                entity.HasOne(d => d.TipoActividad)
-                    .WithMany(p => p.Actividadevaluacions)
-                    .HasForeignKey(d => d.TipoActividadId);
-
-                entity.HasOne(d => d.Usuario)
-                    .WithMany(p => p.Actividadevaluacions)
-                    .HasForeignKey(d => d.UsuarioId);
+                entity.Ignore(a => a.Usuario);
             });
 
-            // Grado
-            modelBuilder.Entity<Grado>(entity =>
+            modelBuilder.Entity<Documentacion>(entity =>
             {
-                entity.HasKey(e => e.Id).HasName("PRIMARY");
-                entity.ToTable("grado");
-
-                entity.HasOne(d => d.Docente)
-                    .WithMany()
-                    .HasForeignKey(d => d.DocenteId);
+                entity.ToTable("documentacion");
+                entity.Ignore(d => d.Usuario);
             });
+
+            modelBuilder.Entity<Gestionacademica>(entity =>
+            {
+                entity.ToTable("gestionacademica");
+                entity.Ignore(g => g.Usuario);
+            });
+
+            modelBuilder.Entity<Matriculafinanza>(entity =>
+            {
+                entity.ToTable("matriculafinanzas");
+                entity.Ignore(m => m.Usuario);
+            });
+
+            modelBuilder.Entity<Observadoralumno>(entity =>
+            {
+                entity.ToTable("observadoralumno");
+                entity.Ignore(o => o.Usuario);
+            });
+
+            // Otras entidades
+            modelBuilder.Entity<Rol>().ToTable("rol");
+            modelBuilder.Entity<Grado>().ToTable("grado");
+            modelBuilder.Entity<Docente>().ToTable("docente");
+            modelBuilder.Entity<Tipodocumento>().ToTable("tipodocumento");
         }
     }
 }
