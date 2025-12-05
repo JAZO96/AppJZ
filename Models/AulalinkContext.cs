@@ -128,10 +128,6 @@ public partial class AulalinkContext : DbContext
                 .HasColumnType("int(11)")
                 .HasColumnName("grado_id");
 
-            entity.HasOne(d => d.Docente).WithMany(p => p.AdministracionescolarDocentes)
-                .HasForeignKey(d => d.DocenteId)
-                .HasConstraintName("administracionescolar_ibfk_1");
-
             entity.HasOne(d => d.Estudiante).WithMany(p => p.AdministracionescolarEstudiantes)
                 .HasForeignKey(d => d.EstudianteId)
                 .HasConstraintName("administracionescolar_ibfk_3");
@@ -211,10 +207,6 @@ public partial class AulalinkContext : DbContext
                 .HasForeignKey(d => d.ParentescoId)
                 .HasConstraintName("datosadicionales_ibfk_2");
 
-            entity.HasOne(d => d.Usuario).WithOne(p => p.Datosadicionale)
-                .HasForeignKey<Datosadicionale>(d => d.UsuarioId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("datosadicionales_ibfk_1");
         });
 
         modelBuilder.Entity<Docente>(entity =>
@@ -357,6 +349,11 @@ public partial class AulalinkContext : DbContext
             entity.Property(e => e.Nombre)
                 .HasMaxLength(20)
                 .HasColumnName("nombre");
+
+            entity.HasOne(d => d.Docente)
+                .WithMany()
+                .HasForeignKey(d => d.DocenteId)
+                .HasConstraintName("grado_ibfk_docente");
         });
 
         modelBuilder.Entity<Gradomaterium>(entity =>
@@ -454,10 +451,6 @@ public partial class AulalinkContext : DbContext
             entity.Property(e => e.UsuarioId)
                 .HasColumnType("int(11)")
                 .HasColumnName("usuario_id");
-
-            entity.HasOne(d => d.DocenteNavigation).WithMany(p => p.ObservadoralumnoDocenteNavigations)
-                .HasForeignKey(d => d.Docente)
-                .HasConstraintName("observadoralumno_ibfk_2");
 
             entity.HasOne(d => d.Usuario).WithMany(p => p.ObservadoralumnoUsuarios)
                 .HasForeignKey(d => d.UsuarioId)
