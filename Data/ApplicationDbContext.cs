@@ -108,7 +108,7 @@ namespace AppJZ.Data
             // Otras entidades
             modelBuilder.Entity<Rol>().ToTable("rol");
             modelBuilder.Entity<Grado>().ToTable("grado");
-            modelBuilder.Entity<Docente>().ToTable("docente");
+            modelBuilder.Entity<Docente>().ToTable("docentes");
             modelBuilder.Entity<Tipodocumento>().ToTable("tipodocumento");
         }
     }
