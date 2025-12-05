@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AppJZ.Data;
+using System;
 using System.Collections.Generic;
 
 namespace AppJZ.Models;
@@ -7,7 +8,7 @@ public partial class Observadoralumno
 {
     public int Id { get; set; }
 
-    public int? UsuarioId { get; set; }
+    public string? UsuarioId { get; set; }
 
     public DateOnly? Fecha { get; set; }
 
@@ -16,6 +17,5 @@ public partial class Observadoralumno
     public int? Docente { get; set; }
 
     public virtual Usuario? DocenteNavigation { get; set; }
-
-    public virtual Usuario? Usuario { get; set; }
+    public ApplicationUser? Usuario { get; set; }
 }

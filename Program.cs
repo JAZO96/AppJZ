@@ -1,50 +1,35 @@
-using AppJZ.Models;
-using Microsoft.EntityFrameworkCore;
-
-using Microsoft.AspNetCore.Identity;
 using AppJZ.Data;
+using AppJZ.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddRazorPages();
 
-var conString = builder.Configuration.GetConnectionString("conexion") ??
-    throw new InvalidOperationException("Connection string 'conexion' not found.");
-
-// === CONTEXTO DE TU BD EXISTENTE ===
-builder.Services.AddDbContext<AulalinkContext>(options =>
-    options.UseMySql(conString, ServerVersion.AutoDetect(conString)));
-
-// === CONTEXTO PARA IDENTITY ===
+// Configurar UN SOLO DbContext
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseMySql(conString, ServerVersion.AutoDetect(conString)));
+    options.UseMySql(
+        builder.Configuration.GetConnectionString("DefaultConnection"),
+        ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("DefaultConnection"))
+    ));
 
-// === CONFIGURACIÓN DE IDENTITY ===
-// MUY IMPORTANTE: usar el ApplicationUser correcto (el de AppJZ.Data)
-builder.Services.AddIdentity<AppJZ.Data.ApplicationUser, IdentityRole>(options =>
-{
-    options.SignIn.RequireConfirmedAccount = false;
-
-    // Contraseña relajada
-    options.Password.RequireDigit = false;
-    options.Password.RequireLowercase = false;
-    options.Password.RequireUppercase = false;
+// Configurar Identity
+builder.Services.AddDefaultIdentity<ApplicationUser>(options => {
+    options.Password.RequireDigit = true;
+    options.Password.RequireLowercase = true;
+    options.Password.RequireUppercase = true;
     options.Password.RequireNonAlphanumeric = false;
     options.Password.RequiredLength = 6;
-
     options.User.RequireUniqueEmail = true;
-
-    // Bloqueo
-    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
-    options.Lockout.MaxFailedAccessAttempts = 5;
+    options.SignIn.RequireConfirmedAccount = false;
 })
-.AddEntityFrameworkStores<ApplicationDbContext>()
-.AddDefaultTokenProviders()
-.AddDefaultUI();
+.AddRoles<IdentityRole>()
+.AddEntityFrameworkStores<ApplicationDbContext>();
 
-// === COOKIES DE AUTENTICACIÓN ===
+builder.Services.AddRazorPages();
+
 builder.Services.ConfigureApplicationCookie(options =>
 {
     options.LoginPath = "/Identity/Account/Login";
@@ -56,7 +41,6 @@ builder.Services.ConfigureApplicationCookie(options =>
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
@@ -65,15 +49,11 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
-// Identity UI
 app.MapRazorPages();
-
-// MVC
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");

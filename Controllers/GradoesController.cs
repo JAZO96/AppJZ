@@ -1,4 +1,5 @@
-﻿using AppJZ.Models;
+﻿using AppJZ.Data;
+using AppJZ.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -6,15 +7,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using AppJZ.Models;
 
 namespace WebApplication1.Controllers
 {
     public class GradoesController : Controller
     {
-        private readonly AulalinkContext _context;
+        private readonly ApplicationDbContext _context;
 
-        public GradoesController(AulalinkContext context)
+        public GradoesController(ApplicationDbContext context)
         {
             _context = context;
         }
@@ -22,8 +22,8 @@ namespace WebApplication1.Controllers
         // GET: Gradoes1
         public async Task<IActionResult> Index()
         {
-            var aulalinkContext = _context.Grados.Include(g => g.Docente);
-            return View(await aulalinkContext.ToListAsync());
+            var ApplicationDbContext = _context.Grados.Include(g => g.Docente);
+            return View(await ApplicationDbContext.ToListAsync());
         }
 
         // GET: Gradoes1/Details/5

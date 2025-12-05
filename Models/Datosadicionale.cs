@@ -5,6 +5,7 @@ namespace AppJZ.Models;
 
 public partial class Datosadicionale
 {
+    public int Id { get; set; }
     public int UsuarioId { get; set; }
 
     public string? Direccion { get; set; }

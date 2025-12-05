@@ -1,4 +1,5 @@
-﻿using AppJZ.Models;
+﻿using AppJZ.Data;
+using AppJZ.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -6,15 +7,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using AppJZ.Models;
 
 namespace AppJZ.Controllers
 {
     public class RolsController : Controller
     {
-        private readonly AulalinkContext _context;
+        private readonly ApplicationDbContext _context;
 
-        public RolsController(AulalinkContext context)
+        public RolsController(ApplicationDbContext context)
         {
             _context = context;
         }

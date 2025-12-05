@@ -27,6 +27,6 @@ namespace AppJZ.Models
         public virtual ICollection<Matriculafinanza> Matriculafinanzas { get; set; } = new List<Matriculafinanza>();
         public virtual ICollection<Gestionacademica> Gestionacademicas { get; set; } = new List<Gestionacademica>();
         public virtual ICollection<Observadoralumno> ObservadoralumnoUsuarios { get; set; } = new List<Observadoralumno>();
-        public virtual ICollection<Administracionescolar> AdministracionescolarEstudiantes { get; set; } = new List<Administracionescolar>();
+        public virtual ICollection<Administracionescolar> Administracionescolar { get; set; } = new List<Administracionescolar>();
     }
 }

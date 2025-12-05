@@ -1,8 +1,8 @@
+using AppJZ.Data;
 using AppJZ.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
-using AppJZ.Models;
 
 namespace AppJZ.Controllers
 {

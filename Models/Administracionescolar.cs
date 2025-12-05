@@ -1,21 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using AppJZ.Data;
 
-namespace AppJZ.Models;
-
-public partial class Administracionescolar
+namespace AppJZ.Models
 {
-    public int Id { get; set; }
+    public partial class Administracionescolar
+    {
+        public int Id { get; set; }
 
-    public int? DocenteId { get; set; }
+        // ----------------------------
+        // DOCENTE (IdentityUser)
+        // ----------------------------
+        public string? DocenteId { get; set; }
+        public ApplicationUser? Docente { get; set; }
 
-    public int? GradoId { get; set; }
+        // ----------------------------
+        // ESTUDIANTE (IdentityUser)
+        // ----------------------------
+        public string? EstudianteId { get; set; }
+        public ApplicationUser? Estudiante { get; set; }
 
-    public int? EstudianteId { get; set; }
-
-    public virtual Usuario? Docente { get; set; }
-
-    public virtual Usuario? Estudiante { get; set; }
-
-    public virtual Grado? Grado { get; set; }
+        // ----------------------------
+        // GRADO
+        // ----------------------------
+        public int? GradoId { get; set; }
+        public Grado? Grado { get; set; }
+    }
 }
